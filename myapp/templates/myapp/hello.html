@@ -1,20 +1,17 @@
 {% extends "myapp/base.html" %}
 
-{% block title %}
-Hello Page
-{% endblock %}
+{% block title %}이름 입력{% endblock %}
 
 {% block content %}
-    {% if name %}
-        <h2>안녕하세요, {{ name }}님!</h2>
-    {% else %}
-        <h2>로그인 해주세요.</h2>
-    {% endif %}
+    <h2>이름을 입력하세요</h2>
 
-    <h3>🍎 과일 리스트</h3>
-    <ul>
-        {% for fruit in fruits %}
-            <li>{{ fruit }}</li>
-        {% endfor %}
-    </ul>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="이름 입력" required>
+        <button type="submit">확인</button>
+    </form>
+
+    {% if name %}
+        <h3>안녕하세요, {{ name }}님!</h3>
+    {% endif %}
 {% endblock %}
