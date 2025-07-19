@@ -3,17 +3,26 @@
 {% block title %}이름 입력{% endblock %}
 
 {% block content %}
-    <h2>이름을 입력하세요</h2>
+  <h2>이름을 입력하세요</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="이름 입력" required>
-        <button type="submit">확인</button>
-    </form>
+  <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="이름 입력" required>
+      <button type="submit">확인</button>
+  </form>
 
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% elif name %}
-        <h3>안녕하세요, {{ name }}님!</h3>
-    {% endif %}
+  {% if error %}
+      <p style="color: red;">{{ error }}</p>
+  {% elif name %}
+      <h3>안녕하세요, {{ name }}님!</h3>
+  {% endif %}
+
+  {% if guests %}
+    <h3>방명록 목록:</h3>
+    <ul>
+      {% for guest in guests %}
+        <li>{{ guest.name }} - {{ guest.created_at|date:"Y-m-d H:i" }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}
