@@ -1,0 +1,22 @@
+body {
+    background-color: #f3f3f3;
+    font-family: sans-serif;
+    padding: 30px;
+}
+
+h1, h2, h3 {
+    color: #3366cc;
+}
+
+form input {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+form button {
+    padding: 8px 12px;
+    background-color: #3366cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
