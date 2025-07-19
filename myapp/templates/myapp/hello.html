@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello {{ name }}</title>
+    <title>Hello Page</title>
 </head>
 <body>
-    <h1>안녕하세요, {{ name }}님!</h1>
-    <p>{{ message }}</p>
 
+    {% if name %}
+        <h1>안녕하세요, {{ name }}님!</h1>
+    {% else %}
+        <h1>로그인 해주세요.</h1>
+    {% endif %}
+
+    <h2>🍎 과일 리스트</h2>
     <ul>
         {% for fruit in fruits %}
             <li>{{ fruit }}</li>
         {% endfor %}
     </ul>
+
 </body>
 </html>
