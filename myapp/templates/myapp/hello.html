@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
+{% extends "myapp/base.html" %}
 
+{% block title %}
+Hello Page
+{% endblock %}
+
+{% block content %}
     {% if name %}
-        <h1>안녕하세요, {{ name }}님!</h1>
+        <h2>안녕하세요, {{ name }}님!</h2>
     {% else %}
-        <h1>로그인 해주세요.</h1>
+        <h2>로그인 해주세요.</h2>
     {% endif %}
 
-    <h2>🍎 과일 리스트</h2>
+    <h3>🍎 과일 리스트</h3>
     <ul>
         {% for fruit in fruits %}
             <li>{{ fruit }}</li>
         {% endfor %}
     </ul>
-
-</body>
-</html>
+{% endblock %}

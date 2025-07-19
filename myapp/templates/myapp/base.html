@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}기본 타이틀{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Django 웹앱</h1>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        기본 내용
+        {% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>ⓒ 2025 - My Django App</p>
+    </footer>
+</body>
+</html>
