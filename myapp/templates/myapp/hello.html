@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello Page</title>
+    <title>Hello {{ name }}</title>
 </head>
 <body>
     <h1>안녕하세요, {{ name }}님!</h1>
     <p>{{ message }}</p>
+
+    <ul>
+        {% for fruit in fruits %}
+            <li>{{ fruit }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
