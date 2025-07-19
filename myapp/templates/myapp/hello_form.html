@@ -11,7 +11,9 @@
         <button type="submit">확인</button>
     </form>
 
-    {% if name %}
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% elif name %}
         <h3>안녕하세요, {{ name }}님!</h3>
     {% endif %}
 {% endblock %}
