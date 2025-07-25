@@ -1,18 +1,10 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-<h2>파일 업로드</h2>
-
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">업로드</button>
-</form>
-
-<h3>업로드된 파일</h3>
-<ul>
-  {% for item in uploads %}
-    <li>{{ item.title }} - <a href="{{ item.file.url }}">{{ item.file.name }}</a></li>
-  {% endfor %}
-</ul>
+  <h2>사진 업로드</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">업로드</button>
+  </form>
 {% endblock %}
