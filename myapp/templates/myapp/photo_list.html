@@ -1,0 +1,14 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+  <h2>업로드된 사진 목록</h2>
+  {% for photo in photos %}
+    <div style="margin-bottom: 20px;">
+      <img src="{{ photo.image.url }}" style="max-width: 300px;" alt="업로드된 이미지">
+      <p>업로드 시각: {{ photo.uploaded_at }}</p>
+    </div>
+  {% empty %}
+    <p>아직 사진이 없습니다.</p>
+  {% endfor %}
+  <a href="{% url 'upload' %}">사진 업로드로 돌아가기</a>
+{% endblock %}
