@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>블로그</title>
+</head>
+<body>
+    <h1>첫 블로그</h1>
+    <hr>
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <small>작성일: {{ post.created_at }}</small>
+        <hr>
+    {% empty %}
+        <p>아직 글이 없어요 ㅠㅠ</p>
+    {% endfor %}
+</body>
+</html>

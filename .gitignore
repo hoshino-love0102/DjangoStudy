@@ -1,0 +1,26 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Django stuff
+*.log
+*.pot
+*.sqlite3
+db.sqlite3
+
+# VSCode settings
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Coverage / test reports
+.coverage
+htmlcov//
