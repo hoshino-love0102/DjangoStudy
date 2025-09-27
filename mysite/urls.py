@@ -3,5 +3,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("blog.urls")), # 블로그 앱 연결
+
+    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+
+    path("", include("blog.urls")),
 ]
