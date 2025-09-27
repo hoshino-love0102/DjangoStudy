@@ -5,11 +5,47 @@
 </head>
 <body>
     <h1>첫 블로그</h1>
+
+    {% if user.is_authenticated %}
+        <p>
+            {{ user.username }} 님 안녕하세요!
+            <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">로그아웃</button>
+            </form>
+        </p>
+
+        <p>
+            <a href="{% url 'post_new' %}">새 글 쓰기</a>
+        </p>
+
+    {% else %}
+        <p>
+            <a href="{% url 'login' %}">로그인</a> /
+            <a href="{% url 'signup' %}">회원가입</a>
+        </p>
+    {% endif %}
+
     <hr>
+
     {% for post in posts %}
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
+
+        {% if post.author %}
+            <small>작성자: {{ post.author.username }}</small><br>
+        {% endif %}
+
         <small>작성일: {{ post.created_at }}</small>
+
+        {# 로그인 + (작성자 == 나) or 내가 관리자면 삭제 버튼 노출 #}
+        {% if user.is_authenticated and post.author == user or user.is_superuser %}
+            <form method="POST" action="{% url 'post_delete' post.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">삭제</button>
+            </form>
+        {% endif %}
+
         <hr>
     {% empty %}
         <p>아직 글이 없어요 ㅠㅠ</p>
