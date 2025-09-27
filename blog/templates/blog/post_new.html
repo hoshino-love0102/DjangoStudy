@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>새 글 쓰기</title>
+</head>
+<body>
+    <h1>새 글 쓰기</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            제목: <input type="text" name="title">
+        </p>
+        <p>
+            내용:<br>
+            <textarea name="content" rows="5" cols="50"></textarea>
+        </p>
+        <button type="submit">작성</button>
+    </form>
+
+    <p><a href="{% url 'post_list' %}">목록으로</a></p>
+</body>
+</html>
