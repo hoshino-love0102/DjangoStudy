@@ -9,6 +9,9 @@ ENV/
 env/
 .venv/
 
+# Environment variables
+.env
+
 # Django stuff
 *.log
 *.pot
@@ -23,4 +26,4 @@ db.sqlite3
 
 # Coverage / test reports
 .coverage
-htmlcov//
+htmlcov/

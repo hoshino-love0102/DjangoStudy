@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>로그인</title>
+</head>
+<body>
+    <h1>로그인</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">로그인</button>
+    </form>
+
+    <p><a href="{% url 'signup' %}">회원가입</a></p>
+    <p><a href="{% url 'post_list' %}">홈으로</a></p>
+</body>
+</html>
