@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login, logout
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 def signup(request):
@@ -9,7 +10,26 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect("post_list")
+
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+
+            response = redirect("post_list")
+
+            response.set_cookie(
+                "access_token",
+                access_token,
+                httponly=True,
+                samesite="Lax",
+            )
+            response.set_cookie(
+                "refresh_token",
+                str(refresh),
+                httponly=True,
+                samesite="Lax",
+            )
+
+            return response
     else:
         form = UserCreationForm()
 
@@ -18,4 +38,9 @@ def signup(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("post_list")
+
+    response = redirect("post_list")
+    response.delete_cookie("access_token")
+    response.delete_cookie("refresh_token")
+
+    return response

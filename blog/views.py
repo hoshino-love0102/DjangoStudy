@@ -20,7 +20,7 @@ def post_new(request):
             title=title,
             content=content,
             created_at=timezone.now(),
-            author=request.user, # 작성자 저장
+            author=request.user,
         )
         return redirect("post_list")
 
@@ -31,7 +31,6 @@ def post_new(request):
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    # 작성자 또는 관리자만 삭제 가능
     if post.author != request.user and not request.user.is_superuser:
         return HttpResponseForbidden("삭제 권한이 없습니다.")
 
