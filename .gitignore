@@ -26,4 +26,5 @@ db.sqlite3
 
 # Coverage / test reports
 .coverage
-htmlcov/
+htmlcov/__pycache__/
+*.pyc
