@@ -29,8 +29,11 @@
     <hr>
 
     {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
+        <h2>
+            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+        </h2>
+
+        <p>{{ post.content|truncatechars:120 }}</p>
 
         {% if post.author %}
             <small>작성자: {{ post.author.username }}</small><br>
@@ -38,12 +41,13 @@
 
         <small>작성일: {{ post.created_at }}</small>
 
-        {# 로그인 + (작성자 == 나) or 내가 관리자면 삭제 버튼 노출 #}
-        {% if user.is_authenticated and post.author == user or user.is_superuser %}
-            <form method="POST" action="{% url 'post_delete' post.pk %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">삭제</button>
-            </form>
+        {% if user.is_authenticated %}
+            {% if post.author == user or user.is_superuser %}
+                <form method="POST" action="{% url 'post_delete' post.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">삭제</button>
+                </form>
+            {% endif %}
         {% endif %}
 
         <hr>
