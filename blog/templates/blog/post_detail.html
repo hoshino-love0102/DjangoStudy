@@ -1,55 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
 
-    {% if post.author %}
-        <small>작성자: {{ post.author.username }}</small><br>
-    {% endif %}
-    <small>작성일: {{ post.created_at }}</small>
+{% block content %}
+  <div class="card post">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content|linebreaksbr }}</p>
 
-    <hr>
+    <div class="meta">
+      {% if post.author %}<span>작성자: {{ post.author.username }}</span>{% endif %}
+      <span>작성일: {{ post.created_at }}</span>
+    </div>
+  </div>
 
-    <h2>댓글</h2>
+  <div class="hr"></div>
+
+  <div class="card pad">
+    <h2 style="margin:0 0 12px;">댓글</h2>
 
     {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'comment_create' post.pk %}">
-            {% csrf_token %}
-            <textarea name="content" rows="3" cols="60" placeholder="댓글을 입력하세요"></textarea>
-            <br>
-            <button type="submit">댓글 작성</button>
-        </form>
+      <form class="form" method="POST" action="{% url 'comment_create' post.pk %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="댓글을 입력하세요"></textarea>
+        <button class="btn primary" type="submit">댓글 작성</button>
+      </form>
     {% else %}
-        <p><a href="{% url 'login' %}">로그인</a> 후 댓글을 작성할 수 있어요.</p>
+      <div class="helper">
+        <span>댓글을 작성하려면 로그인하세요.</span>
+        <a class="btn" href="{% url 'login' %}">로그인</a>
+      </div>
     {% endif %}
 
-    <hr>
+    <div class="hr"></div>
 
-    <ul>
-        {% for c in comments %}
-            <li>
-                <b>{{ c.author.username }}</b> ({{ c.created_at }})<br>
-                {{ c.content|linebreaksbr }}
+    <div class="list">
+      {% for c in comments %}
+        <div class="comment">
+          <div class="meta">
+            <span><b>{{ c.author.username }}</b></span>
+            <span>{{ c.created_at }}</span>
+          </div>
 
-                {% if user.is_authenticated %}
-                    {% if c.author == user or user.is_superuser %}
-                        <form method="POST" action="{% url 'comment_delete' post.pk c.pk %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit">삭제</button>
-                        </form>
-                    {% endif %}
-                {% endif %}
-            </li>
-            <hr>
-        {% empty %}
-            <li>댓글이 없습니다.</li>
-        {% endfor %}
-    </ul>
+          <div>{{ c.content|linebreaksbr }}</div>
 
-    <p><a href="{% url 'post_list' %}">목록으로</a></p>
-</body>
-</html>
+          {% if user.is_authenticated %}
+            {% if c.author == user or user.is_superuser %}
+              <div class="hr"></div>
+              <form method="POST" action="{% url 'comment_delete' post.pk c.pk %}">
+                {% csrf_token %}
+                <button class="btn danger" type="submit">댓글 삭제</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% empty %}
+        <div class="comment">댓글이 없습니다.</div>
+      {% endfor %}
+    </div>
+
+    <div class="helper">
+      <a class="btn" href="{% url 'post_list' %}">목록으로</a>
+    </div>
+  </div>
+{% endblock %}

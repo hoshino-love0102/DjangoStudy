@@ -1,58 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>블로그</title>
-</head>
-<body>
-    <h1>첫 블로그</h1>
+{% extends "blog/base.html" %}
+{% block title %}글 목록{% endblock %}
 
-    {% if user.is_authenticated %}
-        <p>
-            {{ user.username }} 님 안녕하세요!
-            <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">로그아웃</button>
-            </form>
-        </p>
+{% block content %}
+  <div class="card pad">
+    <div class="meta">
+      <span>전체 글: {{ posts|length }}개</span>
+    </div>
+  </div>
 
-        <p>
-            <a href="{% url 'post_new' %}">새 글 쓰기</a>
-        </p>
-
-    {% else %}
-        <p>
-            <a href="{% url 'login' %}">로그인</a> /
-            <a href="{% url 'signup' %}">회원가입</a>
-        </p>
-    {% endif %}
-
-    <hr>
-
+  <div class="list">
     {% for post in posts %}
-        <h2>
-            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
-        </h2>
+      <div class="card post">
+        <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
 
         <p>{{ post.content|truncatechars:120 }}</p>
 
-        {% if post.author %}
-            <small>작성자: {{ post.author.username }}</small><br>
-        {% endif %}
-
-        <small>작성일: {{ post.created_at }}</small>
+        <div class="meta">
+          {% if post.author %}<span>작성자: {{ post.author.username }}</span>{% endif %}
+          <span>작성일: {{ post.created_at }}</span>
+        </div>
 
         {% if user.is_authenticated %}
-            {% if post.author == user or user.is_superuser %}
-                <form method="POST" action="{% url 'post_delete' post.pk %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">삭제</button>
-                </form>
-            {% endif %}
+          {% if post.author == user or user.is_superuser %}
+            <div class="hr"></div>
+            <form method="POST" action="{% url 'post_delete' post.pk %}">
+              {% csrf_token %}
+              <button class="btn danger" type="submit">삭제</button>
+            </form>
+          {% endif %}
         {% endif %}
-
-        <hr>
+      </div>
     {% empty %}
-        <p>아직 글이 없어요 ㅠㅠ</p>
+      <div class="card pad">아직 글이 없어요 ㅠㅠ</div>
     {% endfor %}
-</body>
-</html>
+  </div>
+{% endblock %}

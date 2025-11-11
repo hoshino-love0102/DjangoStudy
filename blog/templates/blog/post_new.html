@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>새 글 쓰기</title>
-</head>
-<body>
-    <h1>새 글 쓰기</h1>
+{% extends "blog/base.html" %}
+{% block title %}새 글 쓰기{% endblock %}
 
-    <form method="POST">
-        {% csrf_token %}
-        <p>
-            제목: <input type="text" name="title">
-        </p>
-        <p>
-            내용:<br>
-            <textarea name="content" rows="5" cols="50"></textarea>
-        </p>
-        <button type="submit">작성</button>
+{% block content %}
+  <div class="card pad">
+    <h2 style="margin:0 0 14px;">새 글 쓰기</h2>
+
+    <form class="form" method="POST">
+      {% csrf_token %}
+
+      <input type="text" name="title" placeholder="제목" required>
+      <textarea name="content" placeholder="내용" required></textarea>
+
+      <button class="btn primary" type="submit">작성</button>
     </form>
 
-    <p><a href="{% url 'post_list' %}">목록으로</a></p>
-</body>
-</html>
+    <div class="helper">
+      <a class="btn" href="{% url 'post_list' %}">목록으로</a>
+    </div>
+  </div>
+{% endblock %}
